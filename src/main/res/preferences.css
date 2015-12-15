@@ -1,0 +1,13 @@
+.split-pane-divider {
+   -fx-background-color: transparent;
+    -fx-padding: 1 0 0 0;
+}
+.split-pane-divider:hover {
+    -fx-cursor: pointer;
+}
+.split-pane-divider *:hover {
+    -fx-cursor: pointer;
+}
+.split-pane-divider *{
+    -fx-display: none;
+}

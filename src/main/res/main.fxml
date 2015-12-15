@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b1project.udooneo.controller.view.MainViewController">
+   <children>
+      <SplitPane dividerPositions="0.2140468227424749" layoutY="29.0" minHeight="371.0" minWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
+          <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TableView fx:id="pinTable" layoutX="-49.0" layoutY="119.0" prefHeight="569.0" prefWidth="130.0" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="idColumn" prefWidth="75.0" text="PIN" />
+                      <TableColumn fx:id="modeColumn" prefWidth="75.0" text="Mode" />
+                        <TableColumn fx:id="stateColumn" prefWidth="75.0" text="State" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <ToolBar layoutY="524.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="33.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="-0.0">
+                    <items>
+                      <Button fx:id="exportButton" mnemonicParsing="false" text="+">
+                           <contextMenu>
+                              <ContextMenu fx:id="exportMenu">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Button>
+                      <Button fx:id="releasePinButton" disable="true" mnemonicParsing="false" text="-" />
+                    </items>
+                  </ToolBar>
+               </children></AnchorPane>
+          <AnchorPane maxWidth="-Infinity" minHeight="480.0" minWidth="-Infinity" prefWidth="660.0">
+               <children>
+                  <SplitPane dividerPositions="0.6348773841961853" layoutX="77.0" layoutY="52.0" orientation="VERTICAL" prefHeight="369.0" prefWidth="416.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="660.0">
+                           <children>
+                              <ImageView fitHeight="440.0" fitWidth="660.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <image>
+                                    <Image url="@images/gpio_pinout.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_21" fitHeight="16.0" fitWidth="16.0" layoutX="137.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_20" fitHeight="16.0" fitWidth="16.0" layoutX="154.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_19" fitHeight="16.0" fitWidth="16.0" layoutX="173.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_18" fitHeight="16.0" fitWidth="16.0" layoutX="190.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_17" fitHeight="16.0" fitWidth="16.0" layoutX="208.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_16" fitHeight="16.0" fitWidth="16.0" layoutX="225.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_15" fitHeight="16.0" fitWidth="16.0" layoutX="244.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_14" fitHeight="16.0" fitWidth="16.0" layoutX="261.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_22" fitHeight="16.0" fitWidth="16.0" layoutX="279.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_25" fitHeight="16.0" fitWidth="16.0" layoutX="297.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_124" fitHeight="16.0" fitWidth="16.0" layoutX="326.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_182" fitHeight="16.0" fitWidth="16.0" layoutX="344.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_173" fitHeight="16.0" fitWidth="16.0" layoutX="361.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_172" fitHeight="16.0" fitWidth="16.0" layoutX="379.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_181" fitHeight="16.0" fitWidth="16.0" layoutX="396.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_180" fitHeight="16.0" fitWidth="16.0" layoutX="414.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_107" fitHeight="16.0" fitWidth="16.0" layoutX="432.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_106" fitHeight="16.0" fitWidth="16.0" layoutX="449.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_203" fitHeight="16.0" fitWidth="16.0" layoutX="448.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_202" fitHeight="16.0" fitWidth="16.0" layoutX="431.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_177" fitHeight="16.0" fitWidth="16.0" layoutX="413.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_176" fitHeight="16.0" fitWidth="16.0" layoutX="395.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_175" fitHeight="16.0" fitWidth="16.0" layoutX="378.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_174" fitHeight="16.0" fitWidth="16.0" layoutX="360.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_119" fitHeight="16.0" fitWidth="16.0" layoutX="326.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_124bis" fitHeight="16.0" fitWidth="16.0" layoutX="309.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_127" fitHeight="16.0" fitWidth="16.0" layoutX="291.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_116" fitHeight="16.0" fitWidth="16.0" layoutX="273.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_7" fitHeight="16.0" fitWidth="16.0" layoutX="256.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_6" fitHeight="16.0" fitWidth="16.0" layoutX="238.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_5" fitHeight="16.0" fitWidth="16.0" layoutX="220.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="gpio_4" fitHeight="16.0" fitWidth="16.0" layoutX="202.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pin_state_high.png" />
+                                 </image>
+                              </ImageView>
+                           </children></AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <TextArea fx:id="consoleTextArea" editable="false" layoutX="89.0" layoutY="-19.0" prefHeight="95.0" prefWidth="658.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ComboBox fx:id="inputComboBox" editable="true" layoutX="86.0" layoutY="93.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                           </children></AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <MenuBar layoutX="198.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="29.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                <MenuItem fx:id="menuItemConnect" mnemonicParsing="false" text="Connect" />
+                <MenuItem fx:id="menuItemPreferences" mnemonicParsing="false" text="Preferences" />
+                <MenuItem fx:id="menuItemClose" mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
