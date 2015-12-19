@@ -3,6 +3,7 @@ package com.b1project.udooneo.controller.view;
 import com.b1project.udooneo.controller.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -10,8 +11,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -33,7 +36,7 @@ import java.util.prefs.Preferences;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class PreferencesViewController {
+public class PreferencesViewController implements Initializable {
     @FXML
     private ListView<GridPane> menuListView;
     @FXML
@@ -57,7 +60,7 @@ public class PreferencesViewController {
     }
 
     @FXML
-    private void initialize() {
+    public void initialize(URL url, ResourceBundle resourceBundle){
         menuListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldItem, newItem) -> {
             System.out.println("item selected " + newItem.getId());
         });

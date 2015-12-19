@@ -1,4 +1,4 @@
-package com.b1project.udooneo.controller.json;
+package com.b1project.udooneo.controller.listener;
 
 /**
  * Copyright (C) 2015 Cyril Bosselut <bossone0013@gmail.com>
@@ -18,17 +18,6 @@ package com.b1project.udooneo.controller.json;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class NeoJavaProtocol {
-    
-    public final static String COMMAND_HELP = "help";
-    public final static String COMMAND_VERSION = "version";
-    public final static String COMMAND_QUIT = "quit";
-    public final static String COMMAND_LCD_CLEAR = "lcd/clear";
-    public final static String COMMAND_LCD_PRINT = "lcd/print";
-    public final static String COMMAND_TEMP_REQUEST = "sensors/temperature";
-    public final static String COMMAND_EXPORTED_GPIOS = "gpios/exported";
-    public final static String COMMAND_SET_GPIO_MODE = "gpios/mode";
-    public final static String COMMAND_SET_GPIO_STATE = "gpios/state";
-    public final static String COMMAND_RELEASE_GPIO = "gpios/release";
-
+public interface GyroscopeListener {
+    void onGyroscopeDataReceived(String data);
 }

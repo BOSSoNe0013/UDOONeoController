@@ -1,6 +1,9 @@
 package com.b1project.udooneo.controller;
 
 import com.b1project.udooneo.controller.json.*;
+import com.b1project.udooneo.controller.listener.AccelerometerListener;
+import com.b1project.udooneo.controller.listener.GyroscopeListener;
+import com.b1project.udooneo.controller.listener.MagnetometerListener;
 import com.b1project.udooneo.controller.model.Pin;
 import com.b1project.udooneo.controller.view.MainViewController;
 import com.google.gson.Gson;
@@ -78,6 +81,9 @@ public class MainApp extends Application {
     private Socket socket;
     private PrintWriter outPrintWriter;
     private MainViewController mainViewController;
+    private GyroscopeListener gyroscopeListener;
+    private MagnetometerListener magnetometerListener;
+    private AccelerometerListener accelerometerListener;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -102,6 +108,18 @@ public class MainApp extends Application {
     public void stop(){
         storeRequestHistory();
         closeSocket();
+    }
+
+    public void setGyroscopeListener(GyroscopeListener listener){
+        this.gyroscopeListener = listener;
+    }
+
+    public void setMagnetometerListener(MagnetometerListener listener){
+        this.magnetometerListener = listener;
+    }
+
+    public void setAccelerometerListener(AccelerometerListener listener){
+        this.accelerometerListener = listener;
     }
 
     private void setRequestHistory(){
@@ -206,10 +224,8 @@ public class MainApp extends Application {
         try {
             Gson gson = new Gson();
             Message message = gson.fromJson(inputLine, Message.class);
-            System.out.println("Method: " + message.method);
-            System.out.println("Output: " + message.output);
-            mainViewController.appendTextToConsole(message.method + ": " + message.output + "\n");
             Pin pin = null;
+            boolean logToConsole = true;
             switch (message.method){
                 case NeoJavaProtocol.COMMAND_HELP:
                     break;
@@ -222,6 +238,39 @@ public class MainApp extends Application {
                 case NeoJavaProtocol.COMMAND_LCD_PRINT:
                     break;
                 case NeoJavaProtocol.COMMAND_TEMP_REQUEST:
+                    break;
+                case NeoJavaProtocol.COMMAND_ACCELEROMETER_REQUEST:
+                    if(accelerometerListener != null){
+                        logToConsole = false;
+                        if(!message.output.equals("Reading accelerometer data")) {
+                            SensorData sensorData = gson.fromJson(message.output, SensorData.class);
+                            if (sensorData != null) {
+                                accelerometerListener.onAccelerometerDataReceived(sensorData.data);
+                            }
+                        }
+                    }
+                    break;
+                case NeoJavaProtocol.COMMAND_MAGNETOMETER_REQUEST:
+                    if(magnetometerListener != null){
+                        logToConsole = false;
+                        if(!message.output.equals("Reading magnetometer data")) {
+                            SensorData sensorData = gson.fromJson(message.output, SensorData.class);
+                            if (sensorData != null) {
+                                magnetometerListener.onMagnetometerDataReceived(sensorData.data);
+                            }
+                        }
+                    }
+                    break;
+                case NeoJavaProtocol.COMMAND_GYROSCOPE_REQUEST:
+                    if(gyroscopeListener != null){
+                        logToConsole = false;
+                        if(!message.output.equals("Reading gyroscope data")) {
+                            SensorData sensorData = gson.fromJson(message.output, SensorData.class);
+                            if (sensorData != null) {
+                                gyroscopeListener.onGyroscopeDataReceived(sensorData.data);
+                            }
+                        }
+                    }
                     break;
                 case NeoJavaProtocol.COMMAND_EXPORTED_GPIOS:
                     exportedGpios.clear();
@@ -266,6 +315,11 @@ public class MainApp extends Application {
                     break;
                 case ERROR:
                     break;
+            }
+            if (logToConsole) {
+                System.out.println("Method: " + message.method);
+                System.out.println("Output: " + message.output);
+                mainViewController.appendTextToConsole(message.method + ": " + message.output + "\n");
             }
         }
         catch (Exception e){

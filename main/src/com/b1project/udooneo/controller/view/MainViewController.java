@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,15 +26,19 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-public class MainViewController {
+public class MainViewController implements Initializable {
     @FXML
     private MenuItem menuItemConnect;
     @FXML
     private MenuItem menuItemPreferences;
+    @FXML
+    private MenuItem menuItem3DSensors;
     @FXML
     private MenuItem menuItemClose;
     @FXML
@@ -132,7 +137,7 @@ public class MainViewController {
 
 
     @FXML
-    private void initialize(){
+    public void initialize(URL url, ResourceBundle resourceBundle){
         pinTable.setEditable(true);
         pinTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             releasePinButton.setDisable(newValue == null);
@@ -318,6 +323,7 @@ public class MainViewController {
         });
         menuItemConnect.setOnAction(this::handleConnectAction);
         menuItemPreferences.setOnAction(this::handlePreferencesAction);
+        menuItem3DSensors.setOnAction(this::handle3DSensorsAction);
         menuItemClose.setOnAction(this::handleExitAction);
         menuItemAbout.setOnAction(this::handleAboutAction);
 
@@ -342,6 +348,26 @@ public class MainViewController {
     private void handleDisconnectAction(ActionEvent event) {
         exportButton.setDisable(true);
         mainApp.closeSocket();
+    }
+
+    @FXML
+    private void handle3DSensorsAction(ActionEvent event) {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("/3dsensors.fxml"));
+        try {
+            Parent root = loader.load();
+            Sensors3DViewController sensors3DViewController = loader.getController();
+            sensors3DViewController.setMainApp(mainApp);
+            stage.setScene(new Scene(root));
+            stage.setTitle("3D Sensors");
+            stage.initModality(Modality.NONE);
+            stage.initOwner(pinTable.getScene().getWindow());
+            sensors3DViewController.setStage(stage);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
