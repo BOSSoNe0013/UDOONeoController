@@ -8,12 +8,15 @@ import com.b1project.udooneo.controller.model.Pin;
 import com.b1project.udooneo.controller.view.MainViewController;
 import com.google.gson.Gson;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -26,6 +29,7 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.prefs.Preferences;
 
 public class MainApp extends Application {
@@ -42,7 +46,7 @@ public class MainApp extends Application {
     public final static String DEFAULT_HOST_ADDRESS = "192.168.7.2";
     public final static int DEFAULT_HOST_PORT = 45045;
 
-    private static ObservableList<Pin> exportedGpios = FXCollections.observableArrayList();
+    private ObservableList<Pin> exportedGpios = FXCollections.observableArrayList();
     public static final List<Pin> allGpios = new ArrayList<>();
     static {
         allGpios.add(new Pin(106, false, "out"));
@@ -52,7 +56,7 @@ public class MainApp extends Application {
         allGpios.add(new Pin(172, false, "out"));
         allGpios.add(new Pin(173, false, "out"));
         allGpios.add(new Pin(182, false, "out"));
-        allGpios.add(new Pin(124, false, "out"));
+        allGpios.add(new Pin(24, false, "out"));
         allGpios.add(new Pin(25, false, "out"));
         allGpios.add(new Pin(22, false, "out"));
         allGpios.add(new Pin(14, false, "out"));
@@ -70,6 +74,7 @@ public class MainApp extends Application {
         allGpios.add(new Pin(175, false, "out"));
         allGpios.add(new Pin(174, false, "out"));
         allGpios.add(new Pin(119, false, "out"));
+        allGpios.add(new Pin(124, false, "out"));
         allGpios.add(new Pin(127, false, "out"));
         allGpios.add(new Pin(116, false, "out"));
         allGpios.add(new Pin(7, false, "out"));
@@ -94,6 +99,7 @@ public class MainApp extends Application {
         mainViewController = loader.getController();
         mainViewController.setMainApp(this);
         primaryStage.setTitle("UDOO Neo Controller");
+        primaryStage.getIcons().add(new Image("/images/udoo_icon_128.png"));
         primaryStage.setMinHeight(600);
         primaryStage.setMinWidth(800);
         primaryStage.setScene(new Scene(root, 960, 640));
@@ -190,8 +196,12 @@ public class MainApp extends Application {
         catch (ConnectException e){
             mainViewController.updateConnectionMenuItem(false);
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Error");
             alert.setContentText("Connection failed, retry ?");
-            alert.show();
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                openSocket();
+            }
         }
         catch (Exception e) {
             mainViewController.updateConnectionMenuItem(false);
@@ -273,12 +283,14 @@ public class MainApp extends Application {
                     }
                     break;
                 case NeoJavaProtocol.COMMAND_EXPORTED_GPIOS:
-                    exportedGpios.clear();
+                    Platform.runLater(() -> exportedGpios.clear());
+                    System.out.printf("length: %d", exportedGpios.size());
                     PinObject[] pins = gson.fromJson(message.output, PinObject[].class);
                     for(PinObject po: pins) {
                         Pin p = new Pin(po.id, po.state == 1, po.mode);
-                        exportedGpios.add(p);
+                        Platform.runLater(() -> exportedGpios.add(p));
                     }
+                    System.out.printf("length: %d", exportedGpios.size());
                     mainViewController.updatePinStatus();
                     break;
                 case OUTPUT_STATE_CHANGED:
@@ -305,8 +317,9 @@ public class MainApp extends Application {
                         }
                     }
                     if(pin == null){
-                        pin = new Pin(pinMode.pin, false, pinMode.mode);
-                        exportedGpios.add(pin);
+                        final Pin newPin = new Pin(pinMode.pin, false, pinMode.mode);
+                        Platform.runLater(() -> exportedGpios.add(newPin));
+                        pin = newPin;
                     }
                     //System.out.println("Pin: " + pin.toString());
                     pin.setMode(pinMode.mode);

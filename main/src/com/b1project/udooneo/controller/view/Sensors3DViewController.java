@@ -4,10 +4,12 @@ import com.b1project.udooneo.controller.MainApp;
 import com.b1project.udooneo.controller.listener.AccelerometerListener;
 import com.b1project.udooneo.controller.listener.GyroscopeListener;
 import com.b1project.udooneo.controller.listener.MagnetometerListener;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -48,13 +50,32 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
     private PerspectiveCamera camera;
 
     @FXML
-    private TextField xrot;
+    private Label accX;
+    @FXML
+    private Label accY;
+    @FXML
+    private Label accZ;
 
     @FXML
-    private TextField yrot;
+    private Label magnX;
+    @FXML
+    private Label magnY;
+    @FXML
+    private Label magnZ;
 
     @FXML
-    private TextField zrot;
+    private Label gyroX;
+    @FXML
+    private Label gyroY;
+    @FXML
+    private Label gyroZ;
+
+    @FXML
+    private Label rotX;
+    @FXML
+    private Label rotY;
+    @FXML
+    private Label rotZ;
 
     private MainApp mainApp;
 
@@ -78,6 +99,7 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
     private static boolean gyroscopeThreadShoudlStop = false;
     private static boolean magnetometerThreadShoudlStop = false;
     private static boolean accelerometerThreadShoudlStop = false;
+    private static boolean rotationThreadShoudlStop = false;
 
     private static float[] magnetometerVector = new float[3];
     private static float[] accelerometerVector = new float[3];
@@ -101,13 +123,14 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
         gyroscopeThreadShoudlStop = false;
         magnetometerThreadShoudlStop = false;
         accelerometerThreadShoudlStop = false;
-        board = new Box(320.0, 8.0, 240.0);
+        rotationThreadShoudlStop = false;
+        board = new Box(240.0, 8.0, 320.0);
         board.setId("board");
         board.setLayoutX(400);
         board.setLayoutY(300);
         board.setMaterial(new PhongMaterial(Color.GRAY));
         board.setDrawMode(DrawMode.FILL);
-        /*world = new Sphere(20.0);
+        /*world = new Sphere(120.0);
         world.setId("world");
         world.setLayoutX(400);
         world.setLayoutY(300);
@@ -126,9 +149,18 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
         board.getTransforms().addAll(rxBox, ryBox, rzBox);
         //world.getTransforms().addAll(rxBox, ryBox, rzBox);
 
-        xrot.setText("0.0");
-        yrot.setText("0.0");
-        zrot.setText("0.0");
+        accX.setText("0.0");
+        accY.setText("0.0");
+        accZ.setText("0.0");
+        magnX.setText("0.0");
+        magnY.setText("0.0");
+        magnZ.setText("0.0");
+        gyroX.setText("0.0");
+        gyroY.setText("0.0");
+        gyroZ.setText("0.0");
+        rotX.setText("0.0");
+        rotY.setText("0.0");
+        rotZ.setText("0.0");
         buildAxes();
         rootPane.getChildren().add(board);
         //rootPane.getChildren().add(world);
@@ -196,27 +228,33 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
                 if(isInterrupted()){
                     return;
                 }
-                while (!isInterrupted()){
+                while (!isInterrupted() || rotationThreadShoudlStop){
                     try {
                         float[] rotationMatrix = new float[9];
                         float[] tiltMatrix = new float[9];
-                        getRotationMatrix(rotationMatrix, tiltMatrix, accelerometerVector, gyroscopeVector);
+                        getRotationMatrix(rotationMatrix, tiltMatrix, accelerometerVector, magnetometerVector);
 
                         float[] rotation = new float[3];
                         getOrientation(rotationMatrix, rotation);
-                        float rx = (float) Math.ceil(Math.toDegrees(rotation[0]));
+                        /*float rx = (float) Math.ceil(Math.toDegrees(rotation[0]));
                         float ry = (float) Math.ceil(Math.toDegrees(rotation[1]));
-                        float rz = (float) Math.ceil(Math.toDegrees(rotation[2]));
+                        float rz = (float) Math.ceil(Math.toDegrees(rotation[2]));*/
+                        float rx = (float) Math.toDegrees(rotation[0]);
+                        float ry = (float) Math.toDegrees(rotation[1]);
+                        float rz = (float) Math.toDegrees(rotation[2]);
                         /*float rx = rotation[0];
                         float ry = rotation[1];
                         float rz = rotation[2];*/
 
+                        Platform.runLater(() -> rotX.setText(String.format("%f", rx)));
+                        Platform.runLater(() -> rotY.setText(String.format("%f", ry)));
+                        Platform.runLater(() -> rotZ.setText(String.format("%f", rz)));
+
                         rotate3Dto(board, rx, ry, rz);
+                        rotate3D(axisGroup, rx, ry, rz);
+                        //rotate3D(world, rx, ry, rz);
                         Thread.sleep(100L);
-                        /*xrot.setText(String.format("%f", rx));
-                        yrot.setText(String.format("%f", ry));
-                        zrot.setText(String.format("%f", rz));*/
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         return;
                     }
                 }
@@ -241,9 +279,11 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
 
     protected void onClose() {
         System.out.println("finalize");
+        rotationThreadShoudlStop = false;
         gyroscopeThreadShoudlStop = true;
         magnetometerThreadShoudlStop = true;
         accelerometerThreadShoudlStop = true;
+
         rotationThread.interrupt();
         rotationThread = null;
         gyroscopeThread.interrupt();
@@ -252,7 +292,10 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
         magnetometerThread = null;
         accelerometerThread.interrupt();
         accelerometerThread = null;
+
         mainApp.setGyroscopeListener(null);
+        mainApp.setMagnetometerListener(null);
+        mainApp.setAccelerometerListener(null);
     }
 
     private boolean rotationInProgress = false;
@@ -261,7 +304,7 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
         if (rotationInProgress){
             return;
         }
-        System.out.printf("rotate3Dto:%s %f | %f | %f\n", shape.getId(), tx, ty, tz);
+        //System.out.printf("rotate3Dto:%s %f | %f | %f\n", shape.getId(), tx, ty, tz);
         rotationInProgress = true;
         Rotate rxBox = new Rotate(0, 0, 0, 0, Rotate.X_AXIS);
         Rotate ryBox = new Rotate(0, 0, 0, 0, Rotate.Y_AXIS);
@@ -280,11 +323,11 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
         rotationInProgress = false;
     }
 
-    private void rotate3D(Shape3D shape, float rx, float ry, float rz){
+    private void rotate3D(Group shape, float rx, float ry, float rz){
         if (rotationInProgress){
             return;
         }
-        System.out.printf("rotate3D:%s %f | %f | %f\n", shape.getId(), rx, ry, rz);
+        //System.out.printf("rotate3D:%s %f | %f | %f\n", shape.getId(), rx, ry, rz);
         rotationInProgress = true;
         Rotate rxBox = new Rotate(0, 0, 0, 0, Rotate.X_AXIS);
         Rotate ryBox = new Rotate(0, 0, 0, 0, Rotate.Y_AXIS);
@@ -301,6 +344,7 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
     final Xform axisGroup = new Xform();
 
     private void buildAxes() {
+        axisGroup.setId("axis");
         final PhongMaterial redMaterial = new PhongMaterial();
         redMaterial.setDiffuseColor(Color.RED);
         redMaterial.setSpecularColor(Color.RED);
@@ -347,6 +391,9 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
             gyroscopeVector[0] = (float) Double.parseDouble(values[0]);
             gyroscopeVector[1] = (float) Double.parseDouble(values[1]);
             gyroscopeVector[2] = (float) Double.parseDouble(values[2]);
+            Platform.runLater(() -> gyroX.setText(values[0]));
+            Platform.runLater(() -> gyroY.setText(values[1]));
+            Platform.runLater(() -> gyroZ.setText(values[2]));
             //System.out.printf("Gyroscope: %f | %f | %f\n", gyroscopeVector[0], gyroscopeVector[1], gyroscopeVector[2]);
         }
         catch (Exception e){
@@ -361,6 +408,9 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
             magnetometerVector[0] = (float) Double.parseDouble(values[0]);
             magnetometerVector[1] = (float) Double.parseDouble(values[1]);
             magnetometerVector[2] = (float) Double.parseDouble(values[2]);
+            Platform.runLater(() -> magnX.setText(values[0]));
+            Platform.runLater(() -> magnY.setText(values[1]));
+            Platform.runLater(() -> magnZ.setText(values[2]));
             //System.out.printf("Magnetometer: %f | %f | %f\n", magnetometerVector[0], magnetometerVector[1], magnetometerVector[2]);
         }
         catch (Exception e){
@@ -375,6 +425,9 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
             accelerometerVector[0] = (float) Double.parseDouble(values[0]);
             accelerometerVector[1] = (float) Double.parseDouble(values[1]);
             accelerometerVector[2] = (float) Double.parseDouble(values[2]);
+            Platform.runLater(() -> accX.setText(values[0]));
+            Platform.runLater(() -> accY.setText(values[1]));
+            Platform.runLater(() -> accZ.setText(values[2]));
             //System.out.printf("Accelerometer: %f | %f | %f\n", accelerometerVector[0], accelerometerVector[1], accelerometerVector[2]);
         }
         catch (Exception e){

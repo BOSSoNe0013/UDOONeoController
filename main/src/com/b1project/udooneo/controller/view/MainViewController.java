@@ -74,7 +74,7 @@ public class MainViewController implements Initializable {
     @FXML
     private ImageView gpio_25;
     @FXML
-    private ImageView gpio_124;
+    private ImageView gpio_24;
     @FXML
     private ImageView gpio_182;
     @FXML
@@ -114,7 +114,7 @@ public class MainViewController implements Initializable {
     @FXML
     private ImageView gpio_127;
     @FXML
-    private ImageView gpio_124bis;
+    private ImageView gpio_124;
     @FXML
     private ImageView gpio_119;
     @FXML
@@ -132,8 +132,8 @@ public class MainViewController implements Initializable {
 
     }
 
-    HashMap<Integer, ImageView> pinImageViewMap = new HashMap<>();
-    private static ObservableList<String> requestHistory = FXCollections.observableArrayList();
+    private HashMap<Integer, ImageView> pinImageViewMap = new HashMap<>();
+    private final static ObservableList<String> requestHistory = FXCollections.observableArrayList();
 
 
     @FXML
@@ -162,6 +162,9 @@ public class MainViewController implements Initializable {
                         setText(item);
                         setContentDisplay(ContentDisplay.TEXT_ONLY);
                     }
+                }
+                else {
+                    setGraphic(null);
                 }
             }
 
@@ -231,6 +234,9 @@ public class MainViewController implements Initializable {
                         setContentDisplay(ContentDisplay.TEXT_ONLY);
                     }
                 }
+                else {
+                    setGraphic(null);
+                }
             }
             @Override
             public void startEdit() {
@@ -279,6 +285,7 @@ public class MainViewController implements Initializable {
                 mainApp.sendRequest(request);
             }
         });
+
         consoleTextArea.setEditable(false);
         pinImageViewMap.put(21, gpio_21);
         pinImageViewMap.put(20, gpio_20);
@@ -290,7 +297,7 @@ public class MainViewController implements Initializable {
         pinImageViewMap.put(14, gpio_14);
         pinImageViewMap.put(22, gpio_22);
         pinImageViewMap.put(25, gpio_25);
-        pinImageViewMap.put(124, gpio_124);
+        pinImageViewMap.put(24, gpio_24);
         pinImageViewMap.put(182, gpio_182);
         pinImageViewMap.put(173, gpio_173);
         pinImageViewMap.put(172, gpio_172);
@@ -310,7 +317,9 @@ public class MainViewController implements Initializable {
         pinImageViewMap.put(7, gpio_7);
         pinImageViewMap.put(116, gpio_116);
         pinImageViewMap.put(127, gpio_127);
+        pinImageViewMap.put(124, gpio_124);
         pinImageViewMap.put(119, gpio_119);
+
         inputComboBox.setItems(requestHistory);
         inputComboBox.setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ENTER && !inputComboBox.getEditor().getText().isEmpty()){
@@ -321,6 +330,7 @@ public class MainViewController implements Initializable {
                 inputComboBox.getEditor().clear();
             }
         });
+
         menuItemConnect.setOnAction(this::handleConnectAction);
         menuItemPreferences.setOnAction(this::handlePreferencesAction);
         menuItem3DSensors.setOnAction(this::handle3DSensorsAction);
@@ -390,7 +400,10 @@ public class MainViewController implements Initializable {
     @FXML
     private void handleAboutAction(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Todo: complete about");
+        alert.setTitle("UDOO Neo Controller - About");
+        alert.setHeaderText("© 2015, Cyril Bosselut - The B1 Project");
+        alert.setGraphic(new ImageView(MainApp.class.getResource("/images/udoo_icon_64.png").toString()));
+        alert.setContentText("License: GNU General Public License Version 2");
         alert.show();
     }
 
@@ -501,8 +514,6 @@ public class MainViewController implements Initializable {
                     imageView.setEffect(null);
                 }
             }
-            gpio_124bis.setImage(pinImageOff);
-            gpio_124bis.setEffect(null);
             for(Pin pin: mainApp.getExportedGpios()){
                 ImageView pinImageView = pinImageViewMap.get(pin.getId());
                 if(pinImageView != null) {
@@ -512,10 +523,6 @@ public class MainViewController implements Initializable {
                         pinImageView.setImage(pinImageLow);
                     }
                     pinImageView.setEffect(new Glow(0.7));
-                    if(pin.getId() == 124){
-                        gpio_124bis.setImage(pinImageView.getImage());
-                        gpio_124bis.setEffect(new Glow(0.7));
-                    }
                 }
             }
         } catch (IOException e) {

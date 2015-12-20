@@ -6,44 +6,181 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b1project.udooneo.controller.view.Sensors3DViewController">
+<AnchorPane stylesheets="3dsensors.css" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b1project.udooneo.controller.view.Sensors3DViewController">
    <children>
-      <Pane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
-</Pane>
-      <HBox fillHeight="false" prefHeight="43.0" prefWidth="800.0" VBox.vgrow="NEVER">
+      <VBox fillWidth="false" minWidth="256.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="X rot" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </HBox.margin>
-            </Label>
-            <TextField fx:id="xrot">
-               <HBox.margin>
-                  <Insets bottom="4.0" top="4.0" />
-               </HBox.margin>
-            </TextField>
-            <Label text="Y rot" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </HBox.margin>
-            </Label>
-            <TextField fx:id="yrot">
-               <HBox.margin>
-                  <Insets bottom="4.0" top="4.0" />
-               </HBox.margin>
-            </TextField>
-            <Label text="Z rot" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </HBox.margin>
-            </Label>
-            <TextField fx:id="zrot">
-               <HBox.margin>
-                  <Insets bottom="4.0" top="4.0" />
-               </HBox.margin>
-            </TextField>
+            <HBox fillHeight="false">
+               <children>
+                  <Label text="Acceleration Y:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="accY">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false" VBox.vgrow="NEVER">
+               <children>
+                  <Label text="Acceleration X:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="accX">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false">
+               <children>
+                  <Label text="Acceleration Z:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="accZ">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false">
+               <children>
+                  <Label text="Ang. spd. X:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="gyroX">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false">
+               <children>
+                  <Label text="Ang. spd. Y:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="gyroY">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false">
+               <children>
+                  <Label text="Ang. spd. Z:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="gyroZ">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false">
+               <children>
+                  <Label text="Mang. field X:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="magnX">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false" layoutX="10.0" layoutY="196.0">
+               <children>
+                  <Label text="Mang. field Y:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="magnY">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false" layoutX="10.0" layoutY="227.0">
+               <children>
+                  <Label text="Mang. field Z:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="magnZ">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false" layoutX="10.0" layoutY="258.0">
+               <children>
+                  <Label text="Rotation X:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="rotX">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false" layoutX="10.0" layoutY="289.0">
+               <children>
+                  <Label text="Rotation Y:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="rotY">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fillHeight="false" layoutX="10.0" layoutY="320.0">
+               <children>
+                  <Label text="Rotation Z:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="rotZ">
+                     <HBox.margin>
+                        <Insets bottom="8.0" top="8.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
+      <Pane fx:id="rootPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+</Pane>
    </children>
-</VBox>
+</AnchorPane>

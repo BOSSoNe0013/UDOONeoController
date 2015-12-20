@@ -97,7 +97,7 @@
                                     <Image url="@images/pin_state_high.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="gpio_124" fitHeight="16.0" fitWidth="16.0" layoutX="326.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="gpio_24" fitHeight="16.0" fitWidth="16.0" layoutX="326.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/pin_state_high.png" />
                                  </image>
@@ -172,7 +172,7 @@
                                     <Image url="@images/pin_state_high.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fx:id="gpio_124bis" fitHeight="16.0" fitWidth="16.0" layoutX="309.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="gpio_124" fitHeight="16.0" fitWidth="16.0" layoutX="309.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/pin_state_high.png" />
                                  </image>
