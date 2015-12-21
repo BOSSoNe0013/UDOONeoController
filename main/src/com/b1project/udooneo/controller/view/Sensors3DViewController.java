@@ -9,11 +9,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.PointLight;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.transform.Rotate;
@@ -96,10 +99,10 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
     private Thread accelerometerThread;
     private Thread magnetometerThread;
     private Thread rotationThread;
-    private static boolean gyroscopeThreadShoudlStop = false;
-    private static boolean magnetometerThreadShoudlStop = false;
-    private static boolean accelerometerThreadShoudlStop = false;
-    private static boolean rotationThreadShoudlStop = false;
+    private static boolean gyroscopeThreadShouldStop = false;
+    private static boolean magnetometerThreadShouldStop = false;
+    private static boolean accelerometerThreadShouldStop = false;
+    private static boolean rotationThreadShouldStop = false;
 
     private static float[] magnetometerVector = new float[3];
     private static float[] accelerometerVector = new float[3];
@@ -120,15 +123,33 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        gyroscopeThreadShoudlStop = false;
-        magnetometerThreadShoudlStop = false;
-        accelerometerThreadShoudlStop = false;
-        rotationThreadShoudlStop = false;
-        board = new Box(240.0, 8.0, 320.0);
+        gyroscopeThreadShouldStop = false;
+        magnetometerThreadShouldStop = false;
+        accelerometerThreadShouldStop = false;
+        rotationThreadShouldStop = false;
+
+        PointLight light = new PointLight();
+        light.setColor(Color.WHITE);
+
+        Group lightGroup = new Group();
+        lightGroup.getChildren().add(light);
+        rootPane.getChildren().add(lightGroup);
+        light.setRotate(45);
+        lightGroup.setTranslateZ(-75);
+        lightGroup.setLayoutX(440);
+        lightGroup.setLayoutY(240);
+
+        //PhongMaterial mat = new PhongMaterial();
+        //Image diffuseMap = new Image("/images/gpio_pinout.png");
+        //mat.setDiffuseMap(diffuseMap);
+        //mat.setBumpMap(diffuseMap);
+        //mat.setSpecularColor(Color.GREEN);
+
+        board = new Box(240.0, 8.0, 420.0);
         board.setId("board");
         board.setLayoutX(400);
         board.setLayoutY(300);
-        board.setMaterial(new PhongMaterial(Color.GRAY));
+        board.setMaterial(new PhongMaterial(Color.LIGHTGRAY));
         board.setDrawMode(DrawMode.FILL);
         /*world = new Sphere(120.0);
         world.setId("world");
@@ -170,12 +191,12 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
                 if(isInterrupted()){
                     return;
                 }
-                while (!isInterrupted() || !gyroscopeThreadShoudlStop){
+                while (!isInterrupted() || !gyroscopeThreadShouldStop){
                     if(mainApp != null) {
                         mainApp.sendRequest(GYROSCOPE_REQUEST);
                     }
                     try {
-                        Thread.sleep(200L);
+                        Thread.sleep(100L);
                     } catch (InterruptedException e) {
                         return;
                     }
@@ -189,12 +210,12 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
                 if(isInterrupted()){
                     return;
                 }
-                while (!isInterrupted() || !accelerometerThreadShoudlStop){
+                while (!isInterrupted() || !accelerometerThreadShouldStop){
                     if(mainApp != null) {
                         mainApp.sendRequest(ACCELEROMETER_REQUEST);
                     }
                     try {
-                        Thread.sleep(200L);
+                        Thread.sleep(100L);
                     } catch (InterruptedException e) {
                         return;
                     }
@@ -208,12 +229,12 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
                 if(isInterrupted()){
                     return;
                 }
-                while (!isInterrupted() || !magnetometerThreadShoudlStop){
+                while (!isInterrupted() || !magnetometerThreadShouldStop){
                     if(mainApp != null) {
                         mainApp.sendRequest(MAGNETOMETER_REQUEST);
                     }
                     try {
-                        Thread.sleep(200L);
+                        Thread.sleep(100L);
                     } catch (InterruptedException e) {
                         return;
                     }
@@ -228,7 +249,7 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
                 if(isInterrupted()){
                     return;
                 }
-                while (!isInterrupted() || rotationThreadShoudlStop){
+                while (!isInterrupted() || rotationThreadShouldStop){
                     try {
                         float[] rotationMatrix = new float[9];
                         float[] tiltMatrix = new float[9];
@@ -250,8 +271,8 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
                         Platform.runLater(() -> rotY.setText(String.format("%f", ry)));
                         Platform.runLater(() -> rotZ.setText(String.format("%f", rz)));
 
-                        rotate3Dto(board, rx, ry, rz);
-                        rotate3D(axisGroup, rx, ry, rz);
+                        Platform.runLater(() -> rotate3Dto(board, rx, ry, rz));
+                        Platform.runLater(() -> rotate3D(axisGroup, rx, ry, rz));
                         //rotate3D(world, rx, ry, rz);
                         Thread.sleep(100L);
                     } catch (Exception e) {
@@ -279,10 +300,10 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
 
     protected void onClose() {
         System.out.println("finalize");
-        rotationThreadShoudlStop = false;
-        gyroscopeThreadShoudlStop = true;
-        magnetometerThreadShoudlStop = true;
-        accelerometerThreadShoudlStop = true;
+        rotationThreadShouldStop = false;
+        gyroscopeThreadShouldStop = true;
+        magnetometerThreadShouldStop = true;
+        accelerometerThreadShouldStop = true;
 
         rotationThread.interrupt();
         rotationThread = null;
@@ -298,14 +319,15 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
         mainApp.setAccelerometerListener(null);
     }
 
+    private boolean rotationToInProgress = false;
     private boolean rotationInProgress = false;
 
     private void rotate3Dto(Shape3D shape, float tx, float ty, float tz){
-        if (rotationInProgress){
+        if (rotationToInProgress){
             return;
         }
         //System.out.printf("rotate3Dto:%s %f | %f | %f\n", shape.getId(), tx, ty, tz);
-        rotationInProgress = true;
+        rotationToInProgress = true;
         Rotate rxBox = new Rotate(0, 0, 0, 0, Rotate.X_AXIS);
         Rotate ryBox = new Rotate(0, 0, 0, 0, Rotate.Y_AXIS);
         Rotate rzBox = new Rotate(0, 0, 0, 0, Rotate.Z_AXIS);
@@ -320,7 +342,7 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
         originX = tx;
         originY = ty;
         originZ = tz;
-        rotationInProgress = false;
+        rotationToInProgress = false;
     }
 
     private void rotate3D(Group shape, float rx, float ry, float rz){
@@ -357,15 +379,37 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
         blueMaterial.setDiffuseColor(Color.BLUE);
         blueMaterial.setSpecularColor(Color.BLUE);
 
-        final Box xAxis = new Box(AXIS_LENGTH, 1, 1);
-        final Box yAxis = new Box(1, AXIS_LENGTH, 1);
-        final Box zAxis = new Box(1, 1, AXIS_LENGTH);
+        final Box xAxis = new Box(AXIS_LENGTH, 2, 1);
+        final Box yAxis = new Box(1, AXIS_LENGTH, 2);
+        final Box zAxis = new Box(2, 1, AXIS_LENGTH);
+
+        final Circle xPlane = new Circle(AXIS_LENGTH/2);
+        final Circle yPlane = new Circle(AXIS_LENGTH/2);
+        final Circle zPlane = new Circle(AXIS_LENGTH/2);
+
+        xPlane.setStroke(Color.RED);
+        xPlane.setStrokeWidth(2);
+        xPlane.setFill(Color.TRANSPARENT);
+
+        yPlane.setStroke(Color.GREEN);
+        yPlane.setStrokeWidth(2);
+        yPlane.setFill(Color.TRANSPARENT);
+
+        zPlane.setStroke(Color.BLUE);
+        zPlane.setStrokeWidth(2);
+        zPlane.setFill(Color.TRANSPARENT);
+
+        yPlane.setRotationAxis(Rotate.X_AXIS);
+        yPlane.setRotate(90);
+
+        zPlane.setRotationAxis(Rotate.Y_AXIS);
+        zPlane.setRotate(90);
 
         xAxis.setMaterial(redMaterial);
         yAxis.setMaterial(greenMaterial);
         zAxis.setMaterial(blueMaterial);
 
-        axisGroup.getChildren().addAll(xAxis, yAxis, zAxis);
+        axisGroup.getChildren().addAll(xAxis, yAxis, zAxis, xPlane, yPlane, zPlane);
         axisGroup.setVisible(true);
         axisGroup.setLayoutX(400);
         axisGroup.setLayoutY(300);

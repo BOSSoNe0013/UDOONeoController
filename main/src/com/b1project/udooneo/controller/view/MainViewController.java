@@ -17,6 +17,8 @@ import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.TextAlignment;
@@ -287,6 +289,42 @@ public class MainViewController implements Initializable {
         });
 
         consoleTextArea.setEditable(false);
+        MenuItem clearConsoleMenuItem = new MenuItem();
+        clearConsoleMenuItem.setText("Clear console");
+        clearConsoleMenuItem.setOnAction(this::handleClearConsoleAction);
+
+        MenuItem copyMenuItem = new MenuItem();
+        copyMenuItem.setText("Copy");
+        copyMenuItem.setDisable(true);
+        copyMenuItem.setOnAction(this::handleCopyConsoleTextAction);
+
+        /*MenuItem cutMenuItem = new MenuItem();
+        cutMenuItem.setText("Cut");
+        cutMenuItem.setDisable(true);
+        cutMenuItem.setOnAction(this::handleCutConsoleTextAction);*/
+
+        MenuItem selectAllMenuItem = new MenuItem();
+        selectAllMenuItem.setText("Select all");
+        selectAllMenuItem.setOnAction(this::handleSelectAllConsoleTextAction);
+
+        final ContextMenu contextMenu = new ContextMenu();
+        consoleTextArea.setContextMenu(contextMenu);
+        consoleTextArea.getContextMenu().getItems().add(clearConsoleMenuItem);
+        consoleTextArea.getContextMenu().getItems().add(copyMenuItem);
+        //consoleTextArea.getContextMenu().getItems().add(cutMenuItem);
+        consoleTextArea.getContextMenu().getItems().add(selectAllMenuItem);
+
+        consoleTextArea.selectedTextProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue.isEmpty()){
+                copyMenuItem.setDisable(true);
+                //cutMenuItem.setDisable(true);
+            }
+            else{
+                copyMenuItem.setDisable(false);
+                //cutMenuItem.setDisable(false);
+            }
+        });
+
         pinImageViewMap.put(21, gpio_21);
         pinImageViewMap.put(20, gpio_20);
         pinImageViewMap.put(19, gpio_19);
@@ -346,6 +384,40 @@ public class MainViewController implements Initializable {
     @FXML
     private void handleExitAction(ActionEvent event) {
         Platform.exit();
+    }
+
+    @FXML
+    private void handleClearConsoleAction(ActionEvent event){
+        clearConsole();
+    }
+
+    @FXML
+    private void handleCopyConsoleTextAction(ActionEvent event){
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(consoleTextArea.selectedTextProperty().get());
+        clipboard.setContent(content);
+    }
+
+    /*@FXML
+    private void handleCutConsoleTextAction(ActionEvent event){
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(consoleTextArea.selectedTextProperty().get());
+        clipboard.setContent(content);
+
+        IndexRange range = consoleTextArea.getSelection();
+        String origText = consoleTextArea.getText();
+        String firstPart = origText.substring(0, range.getStart());
+        String lastPart = origText.substring(range.getEnd(), origText.length());
+        consoleTextArea.setText( firstPart + lastPart );
+
+        consoleTextArea.positionCaret( range.getStart() );
+    }*/
+
+    @FXML
+    private void handleSelectAllConsoleTextAction(ActionEvent event){
+        consoleTextArea.selectAll();
     }
 
     @FXML
