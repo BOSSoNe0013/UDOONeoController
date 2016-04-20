@@ -34,21 +34,22 @@ import java.util.prefs.Preferences;
 
 public class MainApp extends Application {
 
-    final static String OUTPUT_STATE_CHANGED = "StateChanged";
-    final static String OUTPUT_MODE_CHANGED = "ModeChanged";
-    final static String ERROR = "ERROR";
+    private final static String OUTPUT_STATE_CHANGED = "StateChanged";
+    private final static String OUTPUT_MODE_CHANGED = "ModeChanged";
+    private final static String ERROR = "ERROR";
 
     private Preferences userPreferences;
     public final static String PREF_SERVER_URI = "server_uri";
     public final static String PREF_SERVER_PORT = "server_port";
     public final static String PREF_REQUEST_HISTORY = "request_history";
 
-    public final static String DEFAULT_HOST_ADDRESS = "192.168.7.2";
-    public final static int DEFAULT_HOST_PORT = 45045;
+    private final static String DEFAULT_HOST_ADDRESS = "192.168.7.2";
+    private final static int DEFAULT_HOST_PORT = 45045;
 
     private ObservableList<Pin> exportedGpios = FXCollections.observableArrayList();
     public static final List<Pin> allGpios = new ArrayList<>();
     static {
+        //external bank
         allGpios.add(new Pin(106, false, "out"));
         allGpios.add(new Pin(107, false, "out"));
         allGpios.add(new Pin(180, false, "out"));
@@ -81,6 +82,21 @@ public class MainApp extends Application {
         allGpios.add(new Pin(6, false, "out"));
         allGpios.add(new Pin(5, false, "out"));
         allGpios.add(new Pin(4, false, "out"));
+        //internal bank
+        allGpios.add(new Pin(178, false, "out"));
+        allGpios.add(new Pin(179, false, "out"));
+        allGpios.add(new Pin(104, false, "out"));
+        allGpios.add(new Pin(143, false, "out"));
+        allGpios.add(new Pin(142, false, "out"));
+        allGpios.add(new Pin(141, false, "out"));
+        allGpios.add(new Pin(140, false, "out"));
+        allGpios.add(new Pin(149, false, "out"));
+        allGpios.add(new Pin(105, false, "out"));
+        allGpios.add(new Pin(148, false, "out"));
+        allGpios.add(new Pin(146, false, "out"));
+        allGpios.add(new Pin(147, false, "out"));
+        allGpios.add(new Pin(100, false, "out"));
+        allGpios.add(new Pin(102, false, "out"));
     }
 
     private Socket socket;
@@ -199,7 +215,7 @@ public class MainApp extends Application {
             alert.setHeaderText("Error");
             alert.setContentText("Connection failed, retry ?");
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK){
+            if (result.isPresent() && result.get() == ButtonType.OK){
                 openSocket();
             }
         }
