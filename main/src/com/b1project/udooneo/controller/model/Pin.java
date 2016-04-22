@@ -20,7 +20,7 @@ import javafx.beans.property.*;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class Pin {
+public class Pin implements Comparable<Pin> {
     private final IntegerProperty id;
     private final BooleanProperty state;
     private final StringProperty mode;
@@ -69,5 +69,16 @@ public class Pin {
 
     public StringProperty modeProperty() {
         return mode;
+    }
+
+    @Override
+    public int compareTo(Pin another) {
+        if(getId() > another.getId()){
+            return 1;
+        }
+        else if(getId() < another.getId()){
+            return -1;
+        }
+        return 0;
     }
 }

@@ -196,7 +196,7 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
                         mainApp.sendRequest(GYROSCOPE_REQUEST);
                     }
                     try {
-                        Thread.sleep(100L);
+                        Thread.sleep(1000L);
                     } catch (InterruptedException e) {
                         return;
                     }
@@ -215,7 +215,7 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
                         mainApp.sendRequest(ACCELEROMETER_REQUEST);
                     }
                     try {
-                        Thread.sleep(100L);
+                        Thread.sleep(1000L);
                     } catch (InterruptedException e) {
                         return;
                     }
@@ -234,7 +234,7 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
                         mainApp.sendRequest(MAGNETOMETER_REQUEST);
                     }
                     try {
-                        Thread.sleep(100L);
+                        Thread.sleep(1000L);
                     } catch (InterruptedException e) {
                         return;
                     }
@@ -274,7 +274,7 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
                         Platform.runLater(() -> rotate3Dto(board, rx, ry, rz));
                         Platform.runLater(() -> rotate3D(axisGroup, rx, ry, rz));
                         //rotate3D(world, rx, ry, rz);
-                        Thread.sleep(100L);
+                        Thread.sleep(1000L);
                     } catch (Exception e) {
                         return;
                     }

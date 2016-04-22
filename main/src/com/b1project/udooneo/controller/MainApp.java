@@ -306,6 +306,7 @@ public class MainApp extends Application {
                         Pin p = new Pin(po.id, po.state == 1, po.mode);
                         Platform.runLater(() -> exportedGpios.add(p));
                     }
+                    Platform.runLater(() -> Collections.sort(exportedGpios));
                     System.out.printf("length: %d", exportedGpios.size());
                     mainViewController.updatePinStatus();
                     break;
@@ -335,6 +336,7 @@ public class MainApp extends Application {
                     if(pin == null){
                         final Pin newPin = new Pin(pinMode.pin, false, pinMode.mode);
                         Platform.runLater(() -> exportedGpios.add(newPin));
+                        Platform.runLater(() -> Collections.sort(exportedGpios));
                         pin = newPin;
                     }
                     //System.out.println("Pin: " + pin.toString());
