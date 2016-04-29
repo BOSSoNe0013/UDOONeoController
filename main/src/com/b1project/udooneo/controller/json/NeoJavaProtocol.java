@@ -18,11 +18,15 @@ package com.b1project.udooneo.controller.json;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@SuppressWarnings("unused")
 public class NeoJavaProtocol {
     
     public final static String COMMAND_HELP = "help";
     public final static String COMMAND_VERSION = "version";
     public final static String COMMAND_QUIT = "quit";
+    public final static String COMMAND_BOARD_ID = "board/id";
+    public final static String COMMAND_BOARD_MODEL = "board/model";
+    public final static String COMMAND_BOARD_NAME = "board/name";
     public final static String COMMAND_LCD_CLEAR = "lcd/clear";
     public final static String COMMAND_LCD_PRINT = "lcd/print";
     public final static String COMMAND_TEMP_REQUEST = "sensors/temperature";
@@ -34,4 +38,9 @@ public class NeoJavaProtocol {
     public final static String COMMAND_SET_GPIO_STATE = "gpios/state";
     public final static String COMMAND_RELEASE_GPIO = "gpios/release";
 
+    public final static String SERVER_MESSAGE = "message/server";
+    public final static class ServerMessages{
+        public final static String SHUTDOWN = "shutdown";
+
+    }
 }

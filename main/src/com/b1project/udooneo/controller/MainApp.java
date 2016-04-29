@@ -265,6 +265,11 @@ public class MainApp extends Application {
                     break;
                 case NeoJavaProtocol.COMMAND_TEMP_REQUEST:
                     break;
+                case NeoJavaProtocol.SERVER_MESSAGE:
+                    if(message.output.equals(NeoJavaProtocol.ServerMessages.SHUTDOWN)){
+                        closeSocket();
+                    }
+                    break;
                 case NeoJavaProtocol.COMMAND_ACCELEROMETER_REQUEST:
                     if(accelerometerListener != null){
                         logToConsole = false;
