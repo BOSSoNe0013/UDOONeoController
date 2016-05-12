@@ -149,7 +149,7 @@ public class MainViewController implements Initializable {
         modeColumn.setEditable(true);
         modeColumn.setCellFactory(column -> new TableCell<Pin, String>(){
             private ComboBox<String> comboBox;
-            private final ObservableList<String> options = FXCollections.observableArrayList("out","in");
+            private final ObservableList<String> options = FXCollections.observableArrayList("OUTPUT","INPUT");
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -201,8 +201,8 @@ public class MainViewController implements Initializable {
                 commitEdit(comboBox.getSelectionModel().getSelectedItem());
                 Pin pin = (Pin) getTableRow().getItem();
                 String request = String.format(
-                        "{\"method\":\"%s\",\"content\":{\"pinId\":%s,\"mode\":\"%s\"}}",
-                        NeoJavaProtocol.COMMAND_SET_GPIO_MODE,
+                        "{\"method\":\"%s\",\"pinId\":%s,\"mode\":\"%s\"}",
+                        NeoJavaProtocol.REQ_GPIO_SET_MODE,
                         pin.getId(),
                         getItem()
                 );
@@ -225,7 +225,7 @@ public class MainViewController implements Initializable {
                         text = "HIGH";
                     }
                     Pin pin = (Pin) getTableRow().getItem();
-                    if (pin != null && pin.getMode().equals("out") && isEditing()) {
+                    if (pin != null && pin.getMode().equals("OUTPUT") && isEditing()) {
                         if (comboBox != null) {
                             comboBox.getEditor().setText(text);
                         }
@@ -244,7 +244,7 @@ public class MainViewController implements Initializable {
             public void startEdit() {
                 super.startEdit();
                 Pin pin = (Pin) getTableRow().getItem();
-                if (pin.getMode().equals("out")) {
+                if (pin.getMode().equals("OUTPUT")) {
                     if (comboBox == null) {
                         createComboBox();
                     }
@@ -279,10 +279,10 @@ public class MainViewController implements Initializable {
                 commitEdit(comboBox.getSelectionModel().getSelectedItem().equals("HIGH"));
                 Pin pin = (Pin) getTableRow().getItem();
                 String request = String.format(
-                        "{\"method\":\"%s\",\"content\":{\"pinId\":%s,\"state\":%s}}",
-                        NeoJavaProtocol.COMMAND_SET_GPIO_STATE,
+                        "{\"method\":\"%s\",\"pinId\":%s,\"state\":\"%s\"}",
+                        NeoJavaProtocol.REQ_GPIO_SET_STATE,
                         pin.getId(),
-                        getItem()?1:0
+                        getItem()?"HIGH":"LOW"
                 );
                 mainApp.sendRequest(request);
             }
@@ -497,8 +497,8 @@ public class MainViewController implements Initializable {
                     item.setOnAction(actionEvent -> {
                         Pin pin = (Pin) ((MenuItem)actionEvent.getSource()).getUserData();
                         String request = String.format(
-                                "{\"method\":\"%s\",\"content\":{\"pinId\":%s,\"mode\":\"out\"}}",
-                                NeoJavaProtocol.COMMAND_SET_GPIO_MODE,
+                                "{\"method\":\"%s\",\"pinId\":%s,\"mode\":\"OUTPUT\"}",
+                                NeoJavaProtocol.REQ_GPIO_SET_MODE,
                                 pin.getId()
                         );
                         mainApp.sendRequest(request);
@@ -515,8 +515,8 @@ public class MainViewController implements Initializable {
         Pin pin = pinTable.getSelectionModel().getSelectedItem();
         int pinId = pin.getId();
         String request = String.format(
-                "{\"method\":\"%s\",\"content\":{\"pinId\":%s}}",
-                NeoJavaProtocol.COMMAND_RELEASE_GPIO,
+                "{\"method\":\"%s\",\"pinId\":%s}",
+                NeoJavaProtocol.REQ_GPIO_RELEASE,
                 pinId
         );
         mainApp.sendRequest(request);

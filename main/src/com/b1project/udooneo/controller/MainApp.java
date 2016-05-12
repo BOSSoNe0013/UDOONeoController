@@ -1,6 +1,12 @@
 package com.b1project.udooneo.controller;
 
 import com.b1project.udooneo.controller.json.*;
+import com.b1project.udooneo.controller.json.messages.Message;
+import com.b1project.udooneo.controller.json.messages.ResponseMessage;
+import com.b1project.udooneo.controller.json.messages.response.ResponseExportGpios;
+import com.b1project.udooneo.controller.json.messages.response.ResponseSensorData;
+import com.b1project.udooneo.controller.json.messages.response.ResponseSetPinMode;
+import com.b1project.udooneo.controller.json.messages.response.ResponseSetPinState;
 import com.b1project.udooneo.controller.listener.AccelerometerListener;
 import com.b1project.udooneo.controller.listener.GyroscopeListener;
 import com.b1project.udooneo.controller.listener.MagnetometerListener;
@@ -50,53 +56,53 @@ public class MainApp extends Application {
     public static final List<Pin> allGpios = new ArrayList<>();
     static {
         //external bank
-        allGpios.add(new Pin(106, false, "out"));
-        allGpios.add(new Pin(107, false, "out"));
-        allGpios.add(new Pin(180, false, "out"));
-        allGpios.add(new Pin(181, false, "out"));
-        allGpios.add(new Pin(172, false, "out"));
-        allGpios.add(new Pin(173, false, "out"));
-        allGpios.add(new Pin(182, false, "out"));
-        allGpios.add(new Pin(24, false, "out"));
-        allGpios.add(new Pin(25, false, "out"));
-        allGpios.add(new Pin(22, false, "out"));
-        allGpios.add(new Pin(14, false, "out"));
-        allGpios.add(new Pin(15, false, "out"));
-        allGpios.add(new Pin(16, false, "out"));
-        allGpios.add(new Pin(17, false, "out"));
-        allGpios.add(new Pin(18, false, "out"));
-        allGpios.add(new Pin(19, false, "out"));
-        allGpios.add(new Pin(20, false, "out"));
-        allGpios.add(new Pin(21, false, "out"));
-        allGpios.add(new Pin(203, false, "out"));
-        allGpios.add(new Pin(202, false, "out"));
-        allGpios.add(new Pin(177, false, "out"));
-        allGpios.add(new Pin(176, false, "out"));
-        allGpios.add(new Pin(175, false, "out"));
-        allGpios.add(new Pin(174, false, "out"));
-        allGpios.add(new Pin(119, false, "out"));
-        allGpios.add(new Pin(124, false, "out"));
-        allGpios.add(new Pin(127, false, "out"));
-        allGpios.add(new Pin(116, false, "out"));
-        allGpios.add(new Pin(7, false, "out"));
-        allGpios.add(new Pin(6, false, "out"));
-        allGpios.add(new Pin(5, false, "out"));
-        allGpios.add(new Pin(4, false, "out"));
+        allGpios.add(new Pin(106, false, "OUTPUT"));
+        allGpios.add(new Pin(107, false, "OUTPUT"));
+        allGpios.add(new Pin(180, false, "OUTPUT"));
+        allGpios.add(new Pin(181, false, "OUTPUT"));
+        allGpios.add(new Pin(172, false, "OUTPUT"));
+        allGpios.add(new Pin(173, false, "OUTPUT"));
+        allGpios.add(new Pin(182, false, "OUTPUT"));
+        allGpios.add(new Pin(24, false, "OUTPUT"));
+        allGpios.add(new Pin(25, false, "OUTPUT"));
+        allGpios.add(new Pin(22, false, "OUTPUT"));
+        allGpios.add(new Pin(14, false, "OUTPUT"));
+        allGpios.add(new Pin(15, false, "OUTPUT"));
+        allGpios.add(new Pin(16, false, "OUTPUT"));
+        allGpios.add(new Pin(17, false, "OUTPUT"));
+        allGpios.add(new Pin(18, false, "OUTPUT"));
+        allGpios.add(new Pin(19, false, "OUTPUT"));
+        allGpios.add(new Pin(20, false, "OUTPUT"));
+        allGpios.add(new Pin(21, false, "OUTPUT"));
+        allGpios.add(new Pin(203, false, "OUTPUT"));
+        allGpios.add(new Pin(202, false, "OUTPUT"));
+        allGpios.add(new Pin(177, false, "OUTPUT"));
+        allGpios.add(new Pin(176, false, "OUTPUT"));
+        allGpios.add(new Pin(175, false, "OUTPUT"));
+        allGpios.add(new Pin(174, false, "OUTPUT"));
+        allGpios.add(new Pin(119, false, "OUTPUT"));
+        allGpios.add(new Pin(124, false, "OUTPUT"));
+        allGpios.add(new Pin(127, false, "OUTPUT"));
+        allGpios.add(new Pin(116, false, "OUTPUT"));
+        allGpios.add(new Pin(7, false, "OUTPUT"));
+        allGpios.add(new Pin(6, false, "OUTPUT"));
+        allGpios.add(new Pin(5, false, "OUTPUT"));
+        allGpios.add(new Pin(4, false, "OUTPUT"));
         //internal bank
-        allGpios.add(new Pin(178, false, "out"));
-        allGpios.add(new Pin(179, false, "out"));
-        allGpios.add(new Pin(104, false, "out"));
-        allGpios.add(new Pin(143, false, "out"));
-        allGpios.add(new Pin(142, false, "out"));
-        allGpios.add(new Pin(141, false, "out"));
-        allGpios.add(new Pin(140, false, "out"));
-        allGpios.add(new Pin(149, false, "out"));
-        allGpios.add(new Pin(105, false, "out"));
-        allGpios.add(new Pin(148, false, "out"));
-        allGpios.add(new Pin(146, false, "out"));
-        allGpios.add(new Pin(147, false, "out"));
-        allGpios.add(new Pin(100, false, "out"));
-        allGpios.add(new Pin(102, false, "out"));
+        allGpios.add(new Pin(178, false, "OUTPUT"));
+        allGpios.add(new Pin(179, false, "OUTPUT"));
+        allGpios.add(new Pin(104, false, "OUTPUT"));
+        allGpios.add(new Pin(143, false, "OUTPUT"));
+        allGpios.add(new Pin(142, false, "OUTPUT"));
+        allGpios.add(new Pin(141, false, "OUTPUT"));
+        allGpios.add(new Pin(140, false, "OUTPUT"));
+        allGpios.add(new Pin(149, false, "OUTPUT"));
+        allGpios.add(new Pin(105, false, "OUTPUT"));
+        allGpios.add(new Pin(148, false, "OUTPUT"));
+        allGpios.add(new Pin(146, false, "OUTPUT"));
+        allGpios.add(new Pin(147, false, "OUTPUT"));
+        allGpios.add(new Pin(100, false, "OUTPUT"));
+        allGpios.add(new Pin(102, false, "OUTPUT"));
     }
 
     private Socket socket;
@@ -207,7 +213,7 @@ public class MainApp extends Application {
             mainViewController.updateConnectionMenuItem(true);
             Thread.sleep(2);
             outPrintWriter = new PrintWriter(socket.getOutputStream(), true);
-            sendRequest("{\"method\":\"" + NeoJavaProtocol.COMMAND_EXPORTED_GPIOS + "\",\"content\":\"\"}");
+            sendRequest("{\"method\":\"" + NeoJavaProtocol.REQ_GPIOS_EXPORT + "\",\"content\":\"\"}");
         }
         catch (ConnectException e){
             mainViewController.updateConnectionMenuItem(false);
@@ -249,97 +255,108 @@ public class MainApp extends Application {
     private void processInput(String inputLine){
         try {
             Gson gson = new Gson();
-            Message message = gson.fromJson(inputLine, Message.class);
+            ResponseMessage message = gson.fromJson(inputLine, ResponseMessage.class);
             Pin pin = null;
             boolean logToConsole = true;
             switch (message.method){
-                case NeoJavaProtocol.COMMAND_HELP:
+                case NeoJavaProtocol.RESP_HELP:
                     break;
-                case NeoJavaProtocol.COMMAND_VERSION:
+                case NeoJavaProtocol.RESP_VERSION:
                     break;
-                case NeoJavaProtocol.COMMAND_LCD_CLEAR:
+                case NeoJavaProtocol.RESP_LCD_CLEAR:
                     break;
-                case NeoJavaProtocol.COMMAND_QUIT:
+                case NeoJavaProtocol.RESP_QUIT:
                     break;
-                case NeoJavaProtocol.COMMAND_LCD_PRINT:
+                case NeoJavaProtocol.RESP_LCD_PRINT:
                     break;
-                case NeoJavaProtocol.COMMAND_TEMP_REQUEST:
+                case NeoJavaProtocol.RESP_TEMPERATURE:
                     break;
-                case NeoJavaProtocol.SERVER_MESSAGE:
-                    if(message.output.equals(NeoJavaProtocol.ServerMessages.SHUTDOWN)){
+                case NeoJavaProtocol.REQ_SERVER_ACTION:
+                    if(message.info.equals(NeoJavaProtocol.ServerMessages.SHUTDOWN)){
                         closeSocket();
                     }
                     break;
-                case NeoJavaProtocol.COMMAND_ACCELEROMETER_REQUEST:
+                case NeoJavaProtocol.RESP_ACCELEROMETER:
                     if(accelerometerListener != null){
                         logToConsole = false;
-                        if(!message.output.equals("Reading accelerometer data")) {
-                            SensorData sensorData = gson.fromJson(message.output, SensorData.class);
+                        if(!message.info.equals("Reading accelerometer data")) {
+                            ResponseSensorData responseSensorData = gson.fromJson(inputLine, ResponseSensorData.class);
+                            SensorData sensorData = responseSensorData.content;
                             if (sensorData != null) {
                                 accelerometerListener.onAccelerometerDataReceived(sensorData.data);
                             }
                         }
                     }
                     break;
-                case NeoJavaProtocol.COMMAND_MAGNETOMETER_REQUEST:
+                case NeoJavaProtocol.RESP_MAGNETOMETER:
                     if(magnetometerListener != null){
                         logToConsole = false;
-                        if(!message.output.equals("Reading magnetometer data")) {
-                            SensorData sensorData = gson.fromJson(message.output, SensorData.class);
+                        if(!message.info.equals("Reading magnetometer data")) {
+                            ResponseSensorData responseSensorData = gson.fromJson(inputLine, ResponseSensorData.class);
+                            SensorData sensorData = responseSensorData.content;
                             if (sensorData != null) {
                                 magnetometerListener.onMagnetometerDataReceived(sensorData.data);
                             }
                         }
                     }
                     break;
-                case NeoJavaProtocol.COMMAND_GYROSCOPE_REQUEST:
+                case NeoJavaProtocol.RESP_GYROSCOPE:
                     if(gyroscopeListener != null){
                         logToConsole = false;
-                        if(!message.output.equals("Reading gyroscope data")) {
-                            SensorData sensorData = gson.fromJson(message.output, SensorData.class);
+                        if(!message.info.equals("Reading gyroscope data")) {
+                            ResponseSensorData responseSensorData = gson.fromJson(inputLine, ResponseSensorData.class);
+                            SensorData sensorData = responseSensorData.content;
                             if (sensorData != null) {
                                 gyroscopeListener.onGyroscopeDataReceived(sensorData.data);
                             }
                         }
                     }
                     break;
-                case NeoJavaProtocol.COMMAND_EXPORTED_GPIOS:
+                case NeoJavaProtocol.RESP_GPIOS_EXPORT:
                     Platform.runLater(() -> exportedGpios.clear());
-                    System.out.printf("length: %d", exportedGpios.size());
-                    PinObject[] pins = gson.fromJson(message.output, PinObject[].class);
+                    System.out.printf("length: %d\n", exportedGpios.size());
+                    ResponseExportGpios responseExportGpios = gson.fromJson(inputLine, ResponseExportGpios.class);
+                    List<PinObject> pins = responseExportGpios.content;
                     for(PinObject po: pins) {
-                        Pin p = new Pin(po.id, po.state == 1, po.mode);
-                        Platform.runLater(() -> exportedGpios.add(p));
+                        if(po != null && po.state != null && po.mode != null) {
+                            Pin p = new Pin(po.id, po.state.equals("HIGH"), po.mode);
+                            Platform.runLater(() -> exportedGpios.add(p));
+                        }
                     }
                     Platform.runLater(() -> Collections.sort(exportedGpios));
-                    System.out.printf("length: %d", exportedGpios.size());
+                    System.out.printf("length: %d\n", exportedGpios.size());
                     mainViewController.updatePinStatus();
                     break;
+                case NeoJavaProtocol.RESP_SET_PIN_STATE:
                 case OUTPUT_STATE_CHANGED:
-                    PinState pinState = gson.fromJson(message.output, PinState.class);
+                    ResponseSetPinState responseSetPinState = gson.fromJson(inputLine, ResponseSetPinState.class);
+                    PinObject pinState = responseSetPinState.pin;
                     for(Pin p: exportedGpios) {
-                        if (p.getId() == pinState.pin) {
+                        if (p.getId() == pinState.id) {
                             pin = p;
                             break;
                         }
                     }
                     if(pin != null) {
-                        //System.out.println("Pin: " + pin.toString());
-                        pin.setState(pinState.state == 1);
+                        System.out.println("Pin: " + pin.toString());
+                        pin.setState(pinState.state != null &&
+                                pinState.state.equals("HIGH"));
                         Thread.sleep(30);
-                        mainViewController.updatePinStatus(pinState.pin);
+                        mainViewController.updatePinStatus(pinState.id);
                     }
                     break;
+                case NeoJavaProtocol.RESP_SET_PIN_MODE:
                 case OUTPUT_MODE_CHANGED:
-                    PinMode pinMode = gson.fromJson(message.output, PinMode.class);
+                    ResponseSetPinMode responseSetPinMode = gson.fromJson(inputLine, ResponseSetPinMode.class);
+                    PinObject pinMode = responseSetPinMode.pin;
                     for(Pin p: exportedGpios) {
-                        if (p.getId() == pinMode.pin) {
+                        if (p.getId() == pinMode.id) {
                             pin = p;
                             break;
                         }
                     }
                     if(pin == null){
-                        final Pin newPin = new Pin(pinMode.pin, false, pinMode.mode);
+                        final Pin newPin = new Pin(pinMode.id, false, pinMode.mode);
                         Platform.runLater(() -> exportedGpios.add(newPin));
                         Platform.runLater(() -> Collections.sort(exportedGpios));
                         pin = newPin;
@@ -347,20 +364,21 @@ public class MainApp extends Application {
                     //System.out.println("Pin: " + pin.toString());
                     pin.setMode(pinMode.mode);
                     Thread.sleep(30);
-                    mainViewController.updatePinStatus(pinMode.pin);
+                    mainViewController.updatePinStatus(pinMode.id);
                     break;
                 case ERROR:
                     break;
             }
             if (logToConsole) {
                 System.out.println("Method: " + message.method);
-                System.out.println("Output: " + message.output);
-                mainViewController.appendTextToConsole(message.method + ": " + message.output + "\n");
+                System.out.println("Output: " + message.info);
+                System.out.println("RAW: " + inputLine);
+                mainViewController.appendTextToConsole(message.method + ": " + message.info + "\n");
             }
         }
         catch (Exception e){
             System.err.println("error: invalid message \"" + inputLine + "\"");
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

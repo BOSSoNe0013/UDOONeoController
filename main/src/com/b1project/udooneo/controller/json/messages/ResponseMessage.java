@@ -1,11 +1,11 @@
-package com.b1project.udooneo.controller.json;
+package com.b1project.udooneo.controller.json.messages;
 
 /**
  * Copyright (C) 2015 Cyril Bosselut <bossone0013@gmail.com>
  * <p>
- * This file is part of UDOO Neo Controller
+ * This file is part of NeoJava examples for UDOO
  * <p>
- * UDOO Neo Controller is free software: you can redistribute it and/or modify
+ * NeoJava examples for UDOO is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -18,12 +18,11 @@ package com.b1project.udooneo.controller.json;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class PinState {
-    public Integer pin;
-    public Integer state;
+public class ResponseMessage extends Message {
+    public String info;
 
-    public PinState(Integer pin, Integer state){
-        this.pin = pin;
-        this.state = state;
+    public ResponseMessage(String method, String info) {
+        super(method);
+        this.info = info;
     }
 }

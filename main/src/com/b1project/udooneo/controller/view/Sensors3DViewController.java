@@ -290,7 +290,6 @@ public class Sensors3DViewController implements Initializable, GyroscopeListener
             this.mainApp.setGyroscopeListener(this);
             this.mainApp.setMagnetometerListener(this);
             this.mainApp.setAccelerometerListener(this);
-            this.mainApp.sendRequest(MAGNETOMETER_REQUEST);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.b1project.udooneo.controller.json;
+package com.b1project.udooneo.controller.json.messages;
 
 /**
  * Copyright (C) 2015 Cyril Bosselut <bossone0013@gmail.com>
@@ -18,12 +18,12 @@ package com.b1project.udooneo.controller.json;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class PinMode {
-    public Integer pin;
-    public String mode;
+public class Message {
 
-    public PinMode(Integer pin, String mode){
-        this.pin = pin;
-        this.mode = mode;
+    public final static String ERROR = "ERROR";
+    public String method;
+
+    public Message(String method){
+        this.method = method;
     }
 }

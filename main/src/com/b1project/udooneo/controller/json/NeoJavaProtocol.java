@@ -20,25 +20,41 @@ package com.b1project.udooneo.controller.json;
  */
 @SuppressWarnings("unused")
 public class NeoJavaProtocol {
-    
-    public final static String COMMAND_HELP = "help";
-    public final static String COMMAND_VERSION = "version";
-    public final static String COMMAND_QUIT = "quit";
-    public final static String COMMAND_BOARD_ID = "board/id";
-    public final static String COMMAND_BOARD_MODEL = "board/model";
-    public final static String COMMAND_BOARD_NAME = "board/name";
-    public final static String COMMAND_LCD_CLEAR = "lcd/clear";
-    public final static String COMMAND_LCD_PRINT = "lcd/print";
-    public final static String COMMAND_TEMP_REQUEST = "sensors/temperature";
-    public final static String COMMAND_MAGNETOMETER_REQUEST = "sensors/magnetometer";
-    public final static String COMMAND_ACCELEROMETER_REQUEST = "sensors/accelerometer";
-    public final static String COMMAND_GYROSCOPE_REQUEST = "sensors/gyroscope";
-    public final static String COMMAND_EXPORTED_GPIOS = "gpios/exported";
-    public final static String COMMAND_SET_GPIO_MODE = "gpios/mode";
-    public final static String COMMAND_SET_GPIO_STATE = "gpios/state";
-    public final static String COMMAND_RELEASE_GPIO = "gpios/release";
 
-    public final static String SERVER_MESSAGE = "message/server";
+    public final static String REQ_HELP = "help";
+    public final static String REQ_VERSION = "version";
+    public final static String REQ_QUIT = "quit";
+    public static final String REQ_SERVER_ACTION = "message/server";
+    public final static String REQ_SENSORS_TEMPERATURE = "sensors/temperature";
+    public final static String REQ_SENSORS_MAGNETOMETER = "sensors/magnetometer";
+    public final static String REQ_SENSORS_ACCELEROMETER = "sensors/accelerometer";
+    public final static String REQ_SENSORS_GYROSCOPE = "sensors/gyroscope";
+    public final static String REQ_GPIOS_EXPORT = "gpios/exported";
+    public final static String REQ_GPIO_SET_MODE = "gpios/mode";
+    public final static String REQ_GPIO_SET_STATE = "gpios/state";
+    public final static String REQ_GPIO_RELEASE = "gpios/release";
+    public final static String REQ_LCD_CLEAR = "lcd/clear";
+    public final static String REQ_LCD_PRINT = "lcd/print";
+    public static final String REQ_BOARD_ID = "board/id";
+    public static final String REQ_BOARD_MODEL = "board/model";
+    public static final String REQ_BOARD_NAME = "board/name";
+
+    public static final String RESP_HELP = "resp/"+REQ_HELP;
+    public static final String RESP_VERSION = "resp/"+REQ_VERSION;
+    public final static String RESP_QUIT = "resp/"+REQ_QUIT;
+    public static final String RESP_GPIOS_EXPORT = "resp/"+REQ_GPIOS_EXPORT;
+    public static final String RESP_SET_PIN_MODE = "resp/"+REQ_GPIO_SET_MODE;
+    public static final String RESP_SET_PIN_STATE = "resp/"+REQ_GPIO_SET_STATE;
+    public static final String RESP_TEMPERATURE = "resp/"+REQ_SENSORS_TEMPERATURE;
+    public static final String RESP_GYROSCOPE = "resp/"+REQ_SENSORS_GYROSCOPE;
+    public static final String RESP_ACCELEROMETER = "resp/"+REQ_SENSORS_ACCELEROMETER;
+    public static final String RESP_MAGNETOMETER = "resp/"+REQ_SENSORS_MAGNETOMETER;
+    public static final String RESP_LCD_CLEAR = "resp/"+REQ_LCD_CLEAR;
+    public static final String RESP_LCD_PRINT = "resp/"+REQ_LCD_PRINT;
+    public static final String RESP_BOARD_ID = "resp/"+REQ_BOARD_ID;
+    public static final String RESP_BOARD_MODEL = "resp/"+REQ_BOARD_MODEL;
+    public static final String RESP_BOARD_NAME = "resp/"+REQ_BOARD_NAME;
+
     public final static class ServerMessages{
         public final static String SHUTDOWN = "shutdown";
 
