@@ -24,7 +24,7 @@ public class NeoJavaProtocol {
     public final static String REQ_HELP = "help";
     public final static String REQ_VERSION = "version";
     public final static String REQ_QUIT = "quit";
-    public static final String REQ_SERVER_ACTION = "message/server";
+    public final static String REQ_SERVER_ACTION = "message/server";
     public final static String REQ_SENSORS_TEMPERATURE = "sensors/temperature";
     public final static String REQ_SENSORS_MAGNETOMETER = "sensors/magnetometer";
     public final static String REQ_SENSORS_ACCELEROMETER = "sensors/accelerometer";
@@ -35,9 +35,9 @@ public class NeoJavaProtocol {
     public final static String REQ_GPIO_RELEASE = "gpios/release";
     public final static String REQ_LCD_CLEAR = "lcd/clear";
     public final static String REQ_LCD_PRINT = "lcd/print";
-    public static final String REQ_BOARD_ID = "board/id";
-    public static final String REQ_BOARD_MODEL = "board/model";
-    public static final String REQ_BOARD_NAME = "board/name";
+    public final static String REQ_BOARD_ID = "board/id";
+    public final static String REQ_BOARD_MODEL = "board/model";
+    public final static String REQ_BOARD_NAME = "board/name";
 
     public static final String RESP_HELP = "resp/"+REQ_HELP;
     public static final String RESP_VERSION = "resp/"+REQ_VERSION;
