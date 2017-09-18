@@ -36,6 +36,7 @@ import java.util.prefs.Preferences;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@SuppressWarnings("unused")
 public class PreferencesViewController implements Initializable {
     @FXML
     private ListView<GridPane> menuListView;
@@ -61,9 +62,10 @@ public class PreferencesViewController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle){
-        menuListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldItem, newItem) -> {
-            System.out.println("item selected " + newItem.getId());
-        });
+        menuListView.getSelectionModel()
+                .selectedItemProperty()
+                .addListener(
+                        (observableValue, oldItem, newItem) -> System.out.println("item selected " + newItem.getId()));
         menuListView.getSelectionModel().select(0);
         preferences = Preferences.userNodeForPackage(MainApp.class);
 

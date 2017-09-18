@@ -141,9 +141,10 @@ public class MainViewController implements Initializable {
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle){
         pinTable.setEditable(true);
-        pinTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-            releasePinButton.setDisable(newValue == null);
-        });
+        pinTable.getSelectionModel()
+                .selectedItemProperty()
+                .addListener(
+                        (observableValue, oldValue, newValue) -> releasePinButton.setDisable(newValue == null));
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asString());
         modeColumn.setCellValueFactory(cellData -> cellData.getValue().modeProperty());
         modeColumn.setEditable(true);
@@ -381,16 +382,19 @@ public class MainViewController implements Initializable {
         releasePinButton.setOnAction(this::handleReleasePinAction);
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void handleExitAction(ActionEvent event) {
         Platform.exit();
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void handleClearConsoleAction(ActionEvent event){
         clearConsole();
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void handleCopyConsoleTextAction(ActionEvent event){
         final Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -415,23 +419,27 @@ public class MainViewController implements Initializable {
         consoleTextArea.positionCaret( range.getStart() );
     }*/
 
+    @SuppressWarnings("unused")
     @FXML
     private void handleSelectAllConsoleTextAction(ActionEvent event){
         consoleTextArea.selectAll();
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void handleConnectAction(ActionEvent event) {
         mainApp.openSocket();
         exportButton.setDisable(false);
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void handleDisconnectAction(ActionEvent event) {
         exportButton.setDisable(true);
         mainApp.closeSocket();
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void handle3DSensorsAction(ActionEvent event) {
         Stage stage = new Stage();
@@ -452,6 +460,7 @@ public class MainViewController implements Initializable {
         }
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void handlePreferencesAction(ActionEvent event) {
         Stage stage = new Stage();
@@ -469,6 +478,7 @@ public class MainViewController implements Initializable {
         }
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void handleAboutAction(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -510,6 +520,7 @@ public class MainViewController implements Initializable {
         }
     }
 
+    @SuppressWarnings("unused")
     @FXML
     private void handleReleasePinAction(ActionEvent event) {
         Pin pin = pinTable.getSelectionModel().getSelectedItem();
