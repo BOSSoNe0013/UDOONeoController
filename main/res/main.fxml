@@ -225,8 +225,14 @@
             <items>
                 <MenuItem fx:id="menuItemConnect" mnemonicParsing="false" text="Connect" />
                 <MenuItem fx:id="menuItemPreferences" mnemonicParsing="false" text="Preferences" />
-                <MenuItem fx:id="menuItem3DSensors" mnemonicParsing="false" text="3D Sensors" />
                 <MenuItem fx:id="menuItemClose" mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu fx:id="menuDevice" mnemonicParsing="false" text="Device" disable="true">
+            <items>
+                <MenuItem fx:id="menuItem3DSensors" mnemonicParsing="false" text="3D Sensors" />
+                <MenuItem fx:id="menuItemStopService" mnemonicParsing="false" text="Stop service" />
+                <MenuItem fx:id="menuItemReboot" mnemonicParsing="false" text="Reboot device" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

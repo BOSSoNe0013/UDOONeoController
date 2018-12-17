@@ -36,6 +36,8 @@ import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
     @FXML
+    private Menu menuDevice;
+    @FXML
     private MenuItem menuItemConnect;
     @FXML
     private MenuItem menuItemPreferences;
@@ -45,6 +47,10 @@ public class MainViewController implements Initializable {
     private MenuItem menuItemClose;
     @FXML
     private MenuItem menuItemAbout;
+    @FXML
+    private MenuItem menuItemStopService;
+    @FXML
+    private MenuItem menuItemReboot;
     @FXML
     private TableView<Pin> pinTable;
     @FXML
@@ -200,7 +206,7 @@ public class MainViewController implements Initializable {
             private void handleChangeModeAction(ActionEvent event) {
                 System.out.println(event);
                 commitEdit(comboBox.getSelectionModel().getSelectedItem());
-                Pin pin = (Pin) getTableRow().getItem();
+                Pin pin = getTableRow().getItem();
                 String request = String.format(
                         "{\"method\":\"%s\",\"pinId\":%s,\"mode\":\"%s\"}",
                         NeoJavaProtocol.REQ_GPIO_SET_MODE,
@@ -225,7 +231,7 @@ public class MainViewController implements Initializable {
                     if(item){
                         text = "HIGH";
                     }
-                    Pin pin = (Pin) getTableRow().getItem();
+                    Pin pin = getTableRow().getItem();
                     if (pin != null && pin.getMode().equals("OUTPUT") && isEditing()) {
                         if (comboBox != null) {
                             comboBox.getEditor().setText(text);
@@ -244,7 +250,7 @@ public class MainViewController implements Initializable {
             @Override
             public void startEdit() {
                 super.startEdit();
-                Pin pin = (Pin) getTableRow().getItem();
+                Pin pin = getTableRow().getItem();
                 if (pin.getMode().equals("OUTPUT")) {
                     if (comboBox == null) {
                         createComboBox();
@@ -278,7 +284,7 @@ public class MainViewController implements Initializable {
             private void handleChangeStateAction(ActionEvent event) {
                 System.out.println(event);
                 commitEdit(comboBox.getSelectionModel().getSelectedItem().equals("HIGH"));
-                Pin pin = (Pin) getTableRow().getItem();
+                Pin pin = getTableRow().getItem();
                 String request = String.format(
                         "{\"method\":\"%s\",\"pinId\":%s,\"state\":\"%s\"}",
                         NeoJavaProtocol.REQ_GPIO_SET_STATE,
@@ -373,6 +379,8 @@ public class MainViewController implements Initializable {
         menuItemConnect.setOnAction(this::handleConnectAction);
         menuItemPreferences.setOnAction(this::handlePreferencesAction);
         menuItem3DSensors.setOnAction(this::handle3DSensorsAction);
+        menuItemStopService.setOnAction(this::handleStopServiceAction);
+        menuItemReboot.setOnAction(this::handleRebootDeviceAction);
         menuItemClose.setOnAction(this::handleExitAction);
         menuItemAbout.setOnAction(this::handleAboutAction);
 
@@ -380,6 +388,28 @@ public class MainViewController implements Initializable {
         exportButton.setOnMouseClicked(this::handleExportButtonAction);
 
         releasePinButton.setOnAction(this::handleReleasePinAction);
+    }
+
+    @SuppressWarnings("unused")
+    @FXML
+    private void handleStopServiceAction(ActionEvent event) {
+        String request = String.format(
+                "{\"method\":\"%s\"}",
+                NeoJavaProtocol.REQ_QUIT
+        );
+        System.out.println(request);
+        mainApp.sendRequest(request);
+    }
+
+    @SuppressWarnings("unused")
+    @FXML
+    private void handleRebootDeviceAction(ActionEvent event) {
+        String request = String.format(
+                "{\"method\":\"%s\"}",
+                NeoJavaProtocol.REQ_BOARD_REBOOT
+        );
+        System.out.println(request);
+        mainApp.sendRequest(request);
     }
 
     @SuppressWarnings("unused")
@@ -615,6 +645,7 @@ public class MainViewController implements Initializable {
 
     public void updateConnectionMenuItem(boolean connected){
         System.out.println("updateConnectionMenuItem: " + connected);
+        menuDevice.setDisable(!connected);
         if(connected){
             menuItemConnect.setText("Disconnect");
             menuItemConnect.setOnAction(this::handleDisconnectAction);

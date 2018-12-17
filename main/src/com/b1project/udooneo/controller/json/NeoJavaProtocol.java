@@ -38,6 +38,7 @@ public class NeoJavaProtocol {
     public final static String REQ_BOARD_ID = "board/id";
     public final static String REQ_BOARD_MODEL = "board/model";
     public final static String REQ_BOARD_NAME = "board/name";
+    public final static String REQ_BOARD_REBOOT = "board/reboot";
 
     public static final String RESP_HELP = "resp/"+REQ_HELP;
     public static final String RESP_VERSION = "resp/"+REQ_VERSION;
@@ -54,6 +55,7 @@ public class NeoJavaProtocol {
     public static final String RESP_BOARD_ID = "resp/"+REQ_BOARD_ID;
     public static final String RESP_BOARD_MODEL = "resp/"+REQ_BOARD_MODEL;
     public static final String RESP_BOARD_NAME = "resp/"+REQ_BOARD_NAME;
+    public static final String RESP_BOARD_REBOOT = "resp/"+REQ_BOARD_REBOOT;
 
     public final static class ServerMessages{
         public final static String SHUTDOWN = "shutdown";

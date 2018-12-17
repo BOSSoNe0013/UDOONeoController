@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="com.google.code.gson:gson:2.5" level="project" />
+    <orderEntry type="library" exported="" name="openjfx" level="project" />
   </component>
 </module>
